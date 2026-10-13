@@ -1,23 +1,19 @@
-name: My First Learning Workflow
-
+name: Deploy hash.html to Pages
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
-  first-job:
+  deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Hello from GitHub Actions
-        run: echo "Dei, GitHub Action work aaguthu da!"
-
-      - name: Show files
-        run: |
-          echo "Repo files:"
-          ls -la
-          echo "Learning done da!"
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - uses: actions/deploy-pages@v4
